@@ -1,3 +1,7 @@
 
 
 
+/* Additional custom styles if needed */
+#root {
+  min-height: 100vh;
+}

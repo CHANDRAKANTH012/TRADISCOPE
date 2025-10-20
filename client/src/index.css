@@ -1,2 +1,25 @@
 @import "tailwindcss";
 
+@theme {
+  /* Primary Brand Colors */
+  --color-primary: #ffffff;         /* White for highlights and text */
+  --color-primary-dark: #e5e5e5;    /* Muted white for subtle borders or hover */
+  --color-primary-light: #f9f9f9;   /* Light background sections */
+
+  /* Secondary (Accent) Colors */
+  --color-secondary: #000000;       /* True black for deep sections */
+  --color-secondary-dark: #0a0a0a;  /* Darker shade for navbars/cards */
+  --color-secondary-light: #1a1a1a; /* Slight contrast layer */
+
+  /* Dark Mode Surfaces */
+  --color-dark-bg: #000000;         /* Background */
+  --color-dark-card: #111111;       /* Cards and input areas */
+  --color-dark-hover: #1c1c1c;      /* Hover/active states */
+
+  /* Typography */
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+
+
+
