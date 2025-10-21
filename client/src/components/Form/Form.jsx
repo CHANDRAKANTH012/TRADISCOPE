@@ -76,7 +76,7 @@ const Form = ({ onSubmit }) => {
               onClick={() => setData({ ...data, action: "Buy" })}
               className={`flex items-center justify-center space-x-2 py-3 rounded-lg border-2 transition-all duration-200 ${
                 data.action === "Buy"
-                  ? "border-white bg-white/10 text-white"
+                  ? "border-emerald-500 bg-emerald-400 text-white"
                   : "border-white/10 hover:border-white/30 text-gray-400"
               }`}
             >
@@ -88,7 +88,7 @@ const Form = ({ onSubmit }) => {
               onClick={() => setData({ ...data, action: "Sell" })}
               className={`flex items-center justify-center space-x-2 py-3 rounded-lg border-2 transition-all duration-200 ${
                 data.action === "Sell"
-                  ? "border-white bg-white/10 text-white"
+                  ? "border-red-500 bg-red-400 text-white"
                   : "border-white/10 hover:border-white/30 text-gray-400"
               }`}
             >

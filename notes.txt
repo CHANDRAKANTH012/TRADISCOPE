@@ -1,0 +1,4 @@
+API_ENDPOINT_EVENTS = https://www.jblanked.com/news/api/forex-factory/calendar/today/
+Headers = 
+Content-Type: application/json
+Authorization: Api-Key arJgyXqT.4EuUfiBEXmn9ieGul47nL8gxgcy9dYEU

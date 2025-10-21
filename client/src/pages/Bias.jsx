@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Loader2,
   TrendingUp,
@@ -8,10 +8,12 @@ import {
   Activity,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { TradeContext } from "../context/TradeContext";
 
 const Bias = () => {
   const [asset, setAsset] = useState("");
-  const [biasResult, setBiasResult] = useState(null);
+  // const [biasResult, setBiasResult] = useState(null);
+  const {biasResult, setBiasResult} = useContext(TradeContext);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -191,8 +193,10 @@ const Bias = () => {
           directional confidence and volatility clusters dynamically.
         </p>
       </motion.div>
+      <div className="absolute bottom-10 right-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute -top-10 -left-10 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
     </div>
-  );
+  );  
 };
 
 export default Bias;
