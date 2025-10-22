@@ -1,0 +1,19 @@
+News Page:
+
+1. Inside the News.jsx : The main goal is to fetch the data & store it in a global context to have the data access throughtout the application
+2. make an API call to the backend with the data collected from different sources
+3. BACKEND - AI pipeline to get summary news and insights 
+4. BACKEND => Frontend
+
+
+
+exe: 
+
+1. storing the form data global context to send data to Parent component (page)
+2. make an API POST request to the BACKEND with the Form_data inside it's body 
+3. make an API POST request with a Dynamic Prompt including the Form_data recieved
+4. parse the recieved JSON Object and respond back the data as a JSON Object to the FRONTEND
+5. Parse the response and Display the Output.
+
+
+news data.io = pub_f0b87a9d144547b2bed8c26ce5076fe7

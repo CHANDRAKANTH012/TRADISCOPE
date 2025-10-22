@@ -1,13 +1,13 @@
 import logo from "./logo.png";
 
 export const optionsData = [
-  "XAU/USD",
-  "EUR/USD",
-  "GBP/USD",
-  "USD/JPY",
-  "EUR/JPY",
-  "GBP/JPY",
-  "AUD/CAD",
+  "XAUUSD",
+  "EURUSD",
+  "GBPUSD",
+  "USDJPY",
+  "EURJPY",
+  "GBPJPY",
+  "AUDCAD",
   "NDX100",
   "US30",
   "S&P500",

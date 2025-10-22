@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { optionsData } from "../../assets/assets";
 import {
   TrendingUp,
@@ -7,25 +7,20 @@ import {
   Target,
   Zap,
 } from "lucide-react";
+import { TradeContext } from "../../context/TradeContext";
 
 const Form = ({ onSubmit }) => {
   const [options, setOptions] = useState([]);
-  const [data, setData] = useState({
-    action: "",
-    pair: "",
-    news: false,
-    events: false,
-    insights: false,
-    entryPrice: "",
-    expectedPrice: "",
-  });
+  const {data, setData} = useContext(TradeContext);
+
+
 
   useEffect(() => {
     setOptions(optionsData);
   }, []);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target; 
     setData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -45,8 +40,8 @@ const Form = ({ onSubmit }) => {
       return;
     }
 
-    console.log("Form Data:", data);
-    if (onSubmit) onSubmit(data);
+    console.log("Form Data:", data.pair);
+
   };
 
   return (
@@ -64,12 +59,13 @@ const Form = ({ onSubmit }) => {
         </h3>
       </div>
 
+ 
       {/* Action Buttons & Pair Select */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div>
           <label className="block text-sm font-medium text-gray-400 mb-2">
             Action
-          </label>
+          </label> 
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
