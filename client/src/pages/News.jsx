@@ -99,7 +99,12 @@ const News = () => {
   
 
   useEffect(() => {
-    fetchNews(q_data)
+    if(q_data){
+      fetchNews(q_data)
+    }
+    else{
+      fetchNews()
+    }
   }, []);
 
   return (
