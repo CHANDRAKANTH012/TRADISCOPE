@@ -1,5 +1,3 @@
-
-
 import { useState } from "react";
 
 const useFetchNews = () => {
@@ -7,9 +5,12 @@ const useFetchNews = () => {
 
   const fetchNews = async (q_data) => {
     try {
-      console.log(q_data);
+      console.log("Query Data Sent:", q_data);
 
       const response = await fetch("http://localhost:5000/api/news/news", {
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ q_data: q_data }),
         method: "POST",
       });

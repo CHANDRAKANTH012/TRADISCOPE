@@ -99,13 +99,13 @@ const News = () => {
   
 
   useEffect(() => {
-    if(q_data){
-      fetchNews(q_data)
-    }
-    else{
-      fetchNews()
-    }
+    fetchNews()
   }, []);
+
+  useEffect(()=>{
+    console.log("Q_data",q_data)
+    fetchNews(q_data)
+  },[q_data])
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-8">

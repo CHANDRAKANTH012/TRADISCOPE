@@ -40,7 +40,7 @@ const Form = ({ onSubmit }) => {
       return;
     }
 
-    console.log("Form Data:", data.pair);
+    // console.log("Form Data:", data.pair);
 
   };
 
