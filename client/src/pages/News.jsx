@@ -101,7 +101,7 @@ const News = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Q_data", q_data);
+    console.log("fetching data...", q_data);
     fetchNews(q_data);
   }, [q_data]);
 

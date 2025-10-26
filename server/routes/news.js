@@ -5,6 +5,8 @@ const router = express.Router();
 
 router.post("/news", async (req, res) => {
   try {
+    console.log('Data recieved',req.body.q_data);
+    
     const API_KEY = `${process.env.NEWSDATA_API_KEY}`;
     const { q_data } = req.body;
     const url = q_data
