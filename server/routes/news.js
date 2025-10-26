@@ -15,7 +15,8 @@ router.post("/news", async (req, res) => {
 
     const response = await fetch(url);
     const data = await response.json();
-
+    console.log(data);
+    
     // If NewsData returns an error
     if (!response.ok) {
       return res.status(response.status).json({
