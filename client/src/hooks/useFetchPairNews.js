@@ -5,7 +5,10 @@ const useFetchPairNews = () => {
 
   const fetchPair = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/pair/pair",{});
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/pair/pair`,
+        {}
+      );
       const data = await response.json();
       setPair(data);
     } catch (err) {

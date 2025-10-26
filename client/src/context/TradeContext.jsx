@@ -20,7 +20,7 @@ export const TradeContextProvider = ({ children }) => {
     setPlanResult(null);
 
     try {
-      const res = await fetch("http://localhost:5000/api/plan", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/plan`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(planPayload),

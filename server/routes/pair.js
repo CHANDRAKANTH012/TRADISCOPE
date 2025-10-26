@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/pair", async (req, res) => {
   const pair = req.body;
   try {
-    const API_KEY = `${process.env.NEWSDATA_API_KEY}`;
+    const API_KEY = `${import.meta.env.NEWSDATA_API_KEY}`;
     const url = `https://newsdata.io/api/1/latest?apikey=${API_KEY}&q=${pair},forex&language=en`;
 
     const response = await fetch(url);

@@ -10,10 +10,11 @@ import {
 import { motion } from "framer-motion";
 import { TradeContext } from "../context/TradeContext";
 
+
 const Bias = () => {
   const [asset, setAsset] = useState("");
   // const [biasResult, setBiasResult] = useState(null);
-  const {biasResult, setBiasResult} = useContext(TradeContext);
+  const { biasResult, setBiasResult } = useContext(TradeContext);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -22,15 +23,18 @@ const Bias = () => {
     setBiasResult(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/bias", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ asset }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/bias`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ asset }),
+        }
+      );
       const data = await response.json();
       setBiasResult(data.result);
     } catch (error) {
-      console.error(error);
+      console.error(error)
       setBiasResult({
         bias: "Error",
         reason: "Unable to fetch bias right now.",
@@ -196,7 +200,7 @@ const Bias = () => {
       <div className="absolute bottom-10 right-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
       <div className="absolute -top-10 -left-10 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
     </div>
-  );  
+  );
 };
 
 export default Bias;

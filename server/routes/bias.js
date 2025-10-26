@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          Authorization: `Bearer ${import.meta.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json",
           "X-Title": "Market Bias AI",
         },
