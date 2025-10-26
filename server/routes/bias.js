@@ -26,36 +26,35 @@ router.post("/", async (req, res) => {
       `;
 
     const response = await axios.post(
-        "https://openrouter.ai/api/v1/chat/completions",
-        {
-          model: "meta-llama/llama-3-8b-instruct",
-          messages: [{ role: "user", content: prompt }],
+      "https://openrouter.ai/api/v1/chat/completions",
+      {
+        model: "meta-llama/llama-3-8b-instruct",
+        messages: [{ role: "user", content: prompt }],
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json",
+          "X-Title": "Market Bias AI",
         },
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-            "Content-Type": "application/json",
-            "HTTP-Referer": "http://localhost:5173",
-            "X-Title": "Market Bias AI",
-          },
-        }
+      }
     );
 
-      const proto_response = response.data.choices[0].message.content;
-      const content = JSON.parse(proto_response);
-      console.log(typeof content);
-      console.log(content);
+    const proto_response = response.data.choices[0].message.content;
+    const content = JSON.parse(proto_response);
+    console.log(typeof content);
+    console.log(content);
 
-       res.json({ result: content });
+    res.json({ result: content });
   } catch (error) {
-      console.error(
-        "Error fetching bias:",
-        error.response?.data || error.message
-      );
-      res.status(500).json({
-        error: "Failed to fetch bias",
-        details: error.response?.data || error.message,
-      });
+    console.error(
+      "Error fetching bias:",
+      error.response?.data || error.message
+    );
+    res.status(500).json({
+      error: "Failed to fetch bias",
+      details: error.response?.data || error.message,
+    });
   }
 });
 
