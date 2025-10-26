@@ -6,6 +6,8 @@ dotenv.config();
 const router = express.Router();
 
 router.post("/", async (req, res) => {
+  console.log("bias hit");
+
   const { asset } = req.body;
   console.log(asset);
 
@@ -33,7 +35,7 @@ router.post("/", async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${import.meta.env.OPENROUTER_API_KEY}`,
+          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json",
           "X-Title": "Market Bias AI",
         },

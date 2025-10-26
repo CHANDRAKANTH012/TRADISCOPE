@@ -5,10 +5,11 @@ const router = express.Router();
 
 router.post("/news", async (req, res) => {
   try {
-    const API_KEY = `${import.meta.env.NEWSDATA_API_KEY}`;
+    const API_KEY = `${process.env.NEWSDATA_API_KEY}`;
     const { q_data } = req.body;
-    const url = q_data ? `https://newsdata.io/api/1/latest?apikey=${API_KEY}&q=${q_data},forex&language=en`:
-    `https://newsdata.io/api/1/latest?apikey=${API_KEY}&q=forex,stocks,crypto,markets&language=en`;
+    const url = q_data
+      ? `https://newsdata.io/api/1/latest?apikey=${API_KEY}&q=${q_data},forex&language=en`
+      : `https://newsdata.io/api/1/latest?apikey=${API_KEY}&q=forex,stocks,crypto,markets&language=en`;
 
     const response = await fetch(url);
     const data = await response.json();

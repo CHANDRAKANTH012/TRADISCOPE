@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { TradeContext } from "../context/TradeContext";
-
+import axios from 'axios'
 
 const Bias = () => {
   const [asset, setAsset] = useState("");
@@ -23,18 +23,19 @@ const Bias = () => {
     setBiasResult(null);
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/bias`,
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/bias/`,
         {
-          method: "POST",
+          asset
+        },
+        {
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ asset }),
         }
       );
       const data = await response.json();
       setBiasResult(data.result);
     } catch (error) {
-      console.error(error)
+      console.error(error);
       setBiasResult({
         bias: "Error",
         reason: "Unable to fetch bias right now.",
