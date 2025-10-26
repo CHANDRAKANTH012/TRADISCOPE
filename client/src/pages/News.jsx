@@ -93,19 +93,17 @@ import Form from "../components/Form/Form";
 import { Loader2, ExternalLink } from "lucide-react";
 
 const News = () => {
-  const { news, fetchNews,data} = useContext(TradeContext);
-  
+  const { news, fetchNews, data } = useContext(TradeContext);
   const q_data = data.pair;
-  
 
   useEffect(() => {
-    fetchNews()
+    fetchNews();
   }, []);
 
-  useEffect(()=>{
-    console.log("Q_data",q_data)
-    fetchNews(q_data)
-  },[q_data])
+  useEffect(() => {
+    console.log("Q_data", q_data);
+    fetchNews(q_data);
+  }, [q_data]);
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-8">
@@ -116,7 +114,7 @@ const News = () => {
 
         <div className="flex flex-col md:flex-row gap-10">
           {/* LEFT — News Feed */}
-          <div className="flex-1 border border-white/10 rounded-xl p-6 bg-black/60 overflow-y-auto max-h-[650px] space-y-6">
+          <div className="flex-1 border border-white/10 rounded-xl p-6 bg-black/60 overflow-y-auto max-h-[650px] space-y-6 no-scrollbar">
             {news.length > 0 ? (
               news.slice(0, 8).map((article, i) => (
                 <div
