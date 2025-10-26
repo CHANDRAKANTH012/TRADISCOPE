@@ -16,8 +16,8 @@ const useFetchNews = () => {
           method: "POST",
         }
       );
-      console.log("Query passed:", q_data);
       const data = await response.json();
+      console.log("Query passed:", q_data);
       setNews(data);
     } catch (err) {
       console.error("Error fetching news:", err);
