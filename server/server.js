@@ -14,6 +14,9 @@ const app = express();
 app.use(cors({ origin: "*", methods: ["GET", "POST"] }));
 app.use(express.json());
 
+app.use("/", (req, res) => {
+  res.send("API WORKING...");
+});
 app.use("/api/bias", biasRoute);
 app.use("/api/events", eventsRouter);
 app.use("/api/news", newsRouter);
