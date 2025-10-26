@@ -44,11 +44,14 @@ router.post("/", async (req, res) => {
 
     const proto_response = response.data.choices[0].message.content;
     const content = JSON.parse(proto_response);
-    console.log(typeof content);
-    console.log(content);
-
+    // console.log(typeof content);
+    // console.log(content);
+    // console.log(proto_response);
+    
     res.json({ result: content });
   } catch (error) {
+    console.log(error);
+    
     console.error(
       "Error fetching bias:",
       error.response?.data || error.message

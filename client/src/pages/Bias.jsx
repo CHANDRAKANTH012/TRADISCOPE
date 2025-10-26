@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { TradeContext } from "../context/TradeContext";
-import axios from 'axios'
+import axios from "axios";
 
 const Bias = () => {
   const [asset, setAsset] = useState("");
@@ -26,13 +26,13 @@ const Bias = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/bias/`,
         {
-          asset
+          asset,
         },
         {
           headers: { "Content-Type": "application/json" },
         }
       );
-      const data = await response.json();
+      const data = await response.data;
       setBiasResult(data.result);
     } catch (error) {
       console.error(error);
