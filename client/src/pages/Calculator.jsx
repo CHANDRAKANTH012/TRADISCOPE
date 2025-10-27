@@ -6,7 +6,13 @@ import CompoundingProjection from "../components/calculator/CompoundingProjectio
 import MultiTradeOptimizer from "../components/calculator/MultiTradeOptimizer";
 import OutcomeProbability from "../components/calculator/OutcomeProbability";
 import { motion } from "framer-motion";
-import { Calculator, BarChart3, TrendingUp, Brain, Percent } from "lucide-react";
+import {
+  Calculator,
+  BarChart3,
+  TrendingUp,
+  Brain,
+  Percent,
+} from "lucide-react";
 
 const CalculatorPage = () => {
   const [active, setActive] = useState("risk");
@@ -56,14 +62,13 @@ const CalculatorPage = () => {
           ))}
         </div>
       </div>
-          <div className="absolute -top-10 -left-10 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-10 right-10 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute -top-10 -left-10 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-10 right-10 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" />
       {/* Active tool */}
       <div className="max-w-6xl mx-auto mb-10">{renderComponent()}</div>
 
       {/* Guide / Description Section */}
       <CalculatorGuideSection />
-      
     </div>
   );
 };
@@ -77,8 +82,7 @@ const CalculatorGuideSection = () => {
     {
       title: "Portfolio Risk Analyzer",
       icon: <BarChart3 className="w-7 h-7 text-emerald-400" />,
-      desc:
-        "Understand your total portfolio exposure at a glance. Visualize the risk percentage and capital allocation across multiple open positions.",
+      desc: "Understand your total portfolio exposure at a glance. Visualize the risk percentage and capital allocation across multiple open positions.",
       guide: [
         "Add trades with pair, capital, and risk percentage.",
         "Use the chart to identify overexposed assets and concentration risk.",
@@ -90,8 +94,7 @@ const CalculatorGuideSection = () => {
     {
       title: "Leverage & Margin Calculator",
       icon: <Calculator className="w-7 h-7 text-yellow-400" />,
-      desc:
-        "Quickly estimate margin required and free margin left after opening a position. Avoid using excessive leverage and know your liquidation risk.",
+      desc: "Quickly estimate margin required and free margin left after opening a position. Avoid using excessive leverage and know your liquidation risk.",
       guide: [
         "Enter account balance, leverage and lot size.",
         "Check required margin and free margin before opening orders.",
@@ -103,8 +106,7 @@ const CalculatorGuideSection = () => {
     {
       title: "Compounding Projection",
       icon: <TrendingUp className="w-7 h-7 text-blue-400" />,
-      desc:
-        "Simulate how your account could grow using compounding based on risk per trade, win rate and reward ratio. Useful for long-term planning.",
+      desc: "Simulate how your account could grow using compounding based on risk per trade, win rate and reward ratio. Useful for long-term planning.",
       guide: [
         "Set starting balance, risk per trade, R:R and win rate.",
         "Run multiple-trade simulations to visualize possible equity curves.",
@@ -116,8 +118,7 @@ const CalculatorGuideSection = () => {
     {
       title: "Multi-Trade Optimizer",
       icon: <Brain className="w-7 h-7 text-purple-400" />,
-      desc:
-        "Run stochastic simulations of a trading strategy to estimate expected final balance, ROI and distribution of outcomes under your parameters.",
+      desc: "Run stochastic simulations of a trading strategy to estimate expected final balance, ROI and distribution of outcomes under your parameters.",
       guide: [
         "Input average R:R, win rate and number of trades.",
         "Simulate sequences of wins/losses to see variance in outcomes.",
@@ -129,8 +130,7 @@ const CalculatorGuideSection = () => {
     {
       title: "Outcome Probability",
       icon: <Percent className="w-7 h-7 text-pink-400" />,
-      desc:
-        "Estimate the probability of finishing profitable given your win rate and reward/risk ratio. Great for testing if a system is statistically viable.",
+      desc: "Estimate the probability of finishing profitable given your win rate and reward/risk ratio. Great for testing if a system is statistically viable.",
       guide: [
         "Enter your historical win rate and average R:R.",
         "Estimate expected value and probability of profit.",
@@ -180,7 +180,9 @@ const CalculatorGuideSection = () => {
               <p className="text-gray-400 mb-4 leading-relaxed">{item.desc}</p>
 
               <div className="bg-black/30 border border-white/6 rounded-md p-4">
-                <h4 className="text-sm text-gray-300 font-semibold mb-2">Quick guide</h4>
+                <h4 className="text-sm text-gray-300 font-semibold mb-2">
+                  Quick guide
+                </h4>
                 <ul className="list-disc ml-5 text-gray-400 space-y-2 text-sm">
                   {item.guide.map((g, idx) => (
                     <li key={idx}>{g}</li>
@@ -204,11 +206,9 @@ const CalculatorGuideSection = () => {
                 </a>
               </div>
             </div>
-            
           </motion.section>
         );
       })}
-      
     </div>
   );
 };
