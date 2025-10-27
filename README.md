@@ -1,7 +1,3 @@
-Below is a full **README.md** draft for your project **Tradiscope**, covering what the system does, how to run it locally and in production, architecture, tech-stack, environment variables, deployment, and troubleshooting. You can copy and adjust it into your repository.
-
----
-
 # Tradiscope
 
 **AI-powered trading assistant & analytics dashboard**
