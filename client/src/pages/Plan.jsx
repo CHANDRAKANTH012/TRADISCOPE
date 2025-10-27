@@ -132,7 +132,7 @@ const Plan = () => {
             onChange={handleChange}
             placeholder="Reason for trade (technical/fundamental)"
             rows={4}
-            className="w-full p-3 bg-[#0d0d0d] border border-[#333] rounded focus:ring-1 focus:ring-white/20 outline-none transition text-sm sm:text-base"
+            className="w-full p-3 bg-[#0d0d0d] border border-[#333] rounded focus:ring-1 focus:ring-white/20 outline-none transition text-sm sm:text-base no-scrollbar"
           />
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

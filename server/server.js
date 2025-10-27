@@ -14,7 +14,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Optional health check route
+
 app.get("/", (req, res) => {
   res.json({ result: "API WORKING..." });
 });

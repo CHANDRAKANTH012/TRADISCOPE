@@ -56,12 +56,14 @@ const CalculatorPage = () => {
           ))}
         </div>
       </div>
-
+          <div className="absolute -top-10 -left-10 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-10 right-10 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" />
       {/* Active tool */}
       <div className="max-w-6xl mx-auto mb-10">{renderComponent()}</div>
 
       {/* Guide / Description Section */}
       <CalculatorGuideSection />
+      
     </div>
   );
 };
@@ -202,9 +204,11 @@ const CalculatorGuideSection = () => {
                 </a>
               </div>
             </div>
+            
           </motion.section>
         );
       })}
+      
     </div>
   );
 };

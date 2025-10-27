@@ -169,7 +169,7 @@ const Home = () => {
           </div>
 
           <p className="mt-4 text-sm text-white-500 italic text-center">
-            Login to Experience the{" "}
+            Explore to Experience the{" "}
             <span className="text-sm text-white italic text-center font-bold">
               "World of AI"
             </span>
