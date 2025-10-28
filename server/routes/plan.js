@@ -1,7 +1,7 @@
-// server/routes/plan.js
 import express from "express";
 import axios from "axios";
 import dotenv from "dotenv";
+
 
 dotenv.config();
 const router = express.Router();
@@ -15,78 +15,86 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Missing plan or pair field" });
     }
 
-    // Prepare a structured prompt asking for strict JSON output
-    const prompt = `
+    // --- GEMINI API SETUP ---
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+    if (!GEMINI_API_KEY) {
+      // NOTE: Ensure you set GEMINI_API_KEY in your .env file
+      return res.status(500).json({ error: "GEMINI_API_KEY environment variable not set" });
+    }
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`;
+    // -------------------------
+
+
+    // 1. Define the System Instruction (Persona & Guidelines)
+    // The instructions are moved here to better guide the model's persona independently of the query.
+    const systemInstructionText = `
         You are a senior financial market analyst and trading mentor.
-        Analyze the following trade plan and respond STRICTLY in valid JSON format with the keys below.
+        Your tone must be professional and data-driven.
+        If some data is missing from the plan, infer logically but note uncertainty in the relevant field.
+        Be concise but realistic — simulate real trading feedback, not motivational text.
+    `;
 
-        Return ONLY a JSON object structured like this:
-        {
-        "summary": string,             // 1–2 line summary of what this trade idea is attempting to capture
-        "bias_verdict": "Bullish" | "Bearish" | "Neutral", // overall bias and sentiment based on context
-        "risk_reward": string,         // formatted like "1:2" or numeric "2.0"
-        "risk_level": "Low" | "Moderate" | "High",  // classify risk based on stop, target, and notes
-        "technical_notes": string,     // highlight chart structure, trend, or setup reasoning
-        "fundamental_notes": string,   // mention any relevant macro or sentiment-based insight
-        "improvements": string,        // 3–4 short actionable improvement tips (entry timing, stop placement, confidence, psychology, etc.)
-        "confidence": number           // integer from 1–10, reflecting trade quality and conviction
-        }
-
-        Here is the trader’s plan data:
-        ${JSON.stringify(plan, null, 2)}
-
-        Guidelines:
-        - Keep the tone professional and data-driven.
-        - If some data is missing, infer logically but note uncertainty.
-        - Avoid repetition or unnecessary text outside the JSON.
-        - Be concise but realistic — simulate real trading feedback, not motivational text.
-        `;
-
-    const response = await axios.post(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        model: "meta-llama/llama-3-8b-instruct",
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 600,
-        temperature: 0.2,
+    // 2. Define the JSON Schema for strict structured output (replacing prompt text instruction)
+    const responseSchema = {
+      type: "OBJECT",
+      properties: {
+        summary: { type: "STRING", description: "1–2 line summary of what this trade idea is attempting to capture" },
+        bias_verdict: { type: "STRING", enum: ["Bullish", "Bearish", "Neutral"], description: "overall bias and sentiment based on context" },
+        risk_reward: { type: "STRING", description: "formatted like '1:2' or numeric '2.0'" },
+        risk_level: { type: "STRING", enum: ["Low", "Moderate", "High"], description: "classify risk based on stop, target, and notes" },
+        technical_notes: { type: "STRING", description: "highlight chart structure, trend, or setup reasoning" },
+        fundamental_notes: { type: "STRING", description: "mention any relevant macro or sentiment-based insight" },
+        improvements: { type: "STRING", description: "3–4 short actionable improvement tips (entry timing, stop placement, confidence, psychology, etc.) but be realistic" },
+        confidence: { type: "NUMBER", description: "integer from 1–10, reflecting trade quality and conviction" }
       },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json",
-        },
+      required: ["summary", "bias_verdict", "risk_reward", "risk_level", "technical_notes", "fundamental_notes", "improvements", "confidence"],
+      propertyOrdering: ["summary", "bias_verdict", "risk_reward", "risk_level", "technical_notes", "fundamental_notes", "improvements", "confidence"]
+    };
+
+    // 3. Construct the prompt with the plan data
+    const userQuery = `Analyze the following trade plan data and return the analysis as a strict JSON object: ${JSON.stringify(plan, null, 2)}`;
+
+    // 4. Construct the Gemini API payload
+    const apiPayload = {
+      contents: [{ parts: [{ text: userQuery }] }],
+      systemInstruction: { parts: [{ text: systemInstructionText }] },
+
+      generationConfig: {
+        responseMimeType: "application/json", // Mandates JSON output
+        responseSchema: responseSchema,       // Defines the exact structure
+        temperature: 0.2,
       }
+    };
+
+    // 5. Make the API Call using Axios to the Gemini endpoint
+    const response = await axios.post(
+      GEMINI_API_URL,
+      apiPayload
     );
 
-    const content = response?.data?.choices?.[0]?.message?.content;
+    // 6. Update response parsing logic for Gemini's structured output
+    const content = response?.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
     if (!content) {
-      return res.status(502).json({ error: "No response from AI" });
+      // Check for blocked content or missing candidates
+      const blockReason = response?.data?.promptFeedback?.blockReason || 'unknown';
+      if (response?.data?.candidates?.length === 0) {
+        return res.status(400).json({ error: `AI response blocked due to safety reasons: ${blockReason}` });
+      }
+      return res.status(502).json({ error: "No structured JSON content found in Gemini response" });
     }
 
-    // Try to parse returned content as JSON
+    // The content is expected to be a valid JSON string due to the generationConfig
     let parsed;
     try {
       parsed = JSON.parse(content);
     } catch (err) {
-      // Fallback: attempt to extract JSON substring (robustness)
-      const first = content.indexOf("{");
-      const last = content.lastIndexOf("}");
-      if (first !== -1 && last !== -1) {
-        try {
-          parsed = JSON.parse(content.slice(first, last + 1));
-        } catch (err2) {
-          // give back raw text if parsing fails
-          return res.json({
-            raw: content,
-            warning: "AI returned non-JSON; returned raw content",
-          });
-        }
-      } else {
-        return res.json({
-          raw: content,
-          warning: "AI returned non-JSON; returned raw content",
-        });
-      }
+      // If parsing fails despite the schema, return the raw content for debugging
+      console.error("Failed to parse expected JSON output from Gemini:", content, err);
+      return res.json({
+        raw: content,
+        warning: "AI returned non-JSON despite schema request; returned raw content",
+      });
     }
 
     // Return parsed JSON
