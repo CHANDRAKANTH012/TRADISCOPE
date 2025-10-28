@@ -82,11 +82,9 @@ router.post("/", async (req, res) => {
       const blockReason =
         response?.data?.promptFeedback?.blockReason || "unknown";
       if (response?.data?.candidates?.length === 0) {
-        return res
-          .status(400)
-          .json({
-            error: `AI response blocked due to safety reasons: ${blockReason}`,
-          });
+        return res.status(400).json({
+          error: `AI response blocked due to safety reasons: ${blockReason}`,
+        });
       }
       return res
         .status(502)
