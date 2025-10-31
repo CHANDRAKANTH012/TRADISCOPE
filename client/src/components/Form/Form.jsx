@@ -11,26 +11,31 @@ import { TradeContext } from "../../context/TradeContext";
 
 const Form = ({ onSubmit }) => {
   const [options, setOptions] = useState([]);
-  const {data, setData} = useContext(TradeContext);
-
-
+  const { data, setData } = useContext(TradeContext);
+  const [pair_value, setPair_value] = useState("");
 
   useEffect(() => {
     setOptions(optionsData);
   }, []);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target; 
+    const { name, value, type, checked } = e.target;
+    // console.log(data);
+
     setData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
   };
 
+    const handlePair = (e) => {
+      setPair_value(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!data.action || !data.pair) {
+    if (!data.action) {
       alert("Please fill in all required fields");
       return;
     }
@@ -40,7 +45,17 @@ const Form = ({ onSubmit }) => {
       return;
     }
 
-    // console.log("Form Data:", data.pair);
+    setData((prev) => ({
+      ...prev,
+      pair: pair_value,
+    }));
+
+    console.log("Submitted Pair:", pair_value);
+
+    onSubmit?.({
+      ...data,
+      pair: pair_value,
+    });
 
   };
 
@@ -59,13 +74,12 @@ const Form = ({ onSubmit }) => {
         </h3>
       </div>
 
- 
       {/* Action Buttons & Pair Select */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div>
           <label className="block text-sm font-medium text-gray-400 mb-2">
             Action
-          </label> 
+          </label>
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
@@ -100,8 +114,8 @@ const Form = ({ onSubmit }) => {
           </label>
           <select
             name="pair"
-            value={data.pair}
-            onChange={handleChange}
+            value={pair_value}
+            onChange={handlePair}
             required
             className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-white focus:ring-1 focus:ring-white/30 transition-all"
           >
@@ -118,7 +132,7 @@ const Form = ({ onSubmit }) => {
       {/* Checkboxes */}
       <div className="mb-8">
         <label className="block text-sm font-medium text-gray-400 mb-3">
-          Include AI Analysis
+          include ?
         </label>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
