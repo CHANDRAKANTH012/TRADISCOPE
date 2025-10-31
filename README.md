@@ -19,6 +19,7 @@ Tradiscope is a full-stack web application built to support traders by providing
 * **APIs used**:
 
   * OpenRouter (LLM model) for bias and trade-plan review.
+  * Google's Gemini Flash 2.5 for Improvements-suggestion.
   * NewsData API for retrieving latest market news.
   * Various internal calculators built in React for risk/position sizing.
 * **Deployment**: Hosted on Render — Web Service for backend, Static Site for frontend.
@@ -51,7 +52,7 @@ TRADISCOPE/
 
 * Node.js v18+
 * npm or yarn
-* API keys for OpenRouter and NewsData
+* API keys for OpenRouter , NewsData and Gemini Flash from Google's AI Studio
 
 ### Run backend locally
 
@@ -131,6 +132,7 @@ Open your browser at `http://localhost:5173`.
 
 ```
 OPENROUTER_API_KEY=sk-…  
+GEMINI_API_KEY=Adsd…  
 NEWSDATA_API_KEY=pub_…  
 NODE_ENV=production
 ```
