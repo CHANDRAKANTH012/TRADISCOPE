@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { TradeContext } from "../context/TradeContext";
 import { Loader2, ClipboardList, BrainCircuit } from "lucide-react";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const Plan = () => {
   const {
@@ -12,6 +13,10 @@ const Plan = () => {
     planLoading,
     planError,
   } = useContext(TradeContext);
+
+  useEffect(()=>{
+    console.log(planResult)
+  })
 
   const [local, setLocal] = useState({
     pair: data.pair || "",
@@ -117,8 +122,8 @@ const Plan = () => {
                   field === "entry"
                     ? "Entry"
                     : field === "stop"
-                    ? "Stop"
-                    : "Target"
+                      ? "Stop"
+                      : "Target"
                 }
                 className="p-3 bg-[#0d0d0d] border border-[#333] rounded focus:ring-1 focus:ring-white/20 outline-none transition text-sm sm:text-base"
                 required
@@ -263,8 +268,8 @@ const Plan = () => {
                         planResult.bias_verdict === "Bullish"
                           ? "text-green-400"
                           : planResult.bias_verdict === "Bearish"
-                          ? "text-red-400"
-                          : "text-yellow-400"
+                            ? "text-red-400"
+                            : "text-yellow-400"
                       }`}
                     >
                       {planResult.bias_verdict}

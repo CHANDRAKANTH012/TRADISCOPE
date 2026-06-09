@@ -30,7 +30,7 @@ const Bias = () => {
         },
         {
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
       const data = await response.data;
       setBiasResult(data.result);
@@ -101,8 +101,8 @@ const Bias = () => {
                       biasResult.bias?.toLowerCase() === "bullish"
                         ? "text-green-400"
                         : biasResult.bias?.toLowerCase() === "bearish"
-                        ? "text-red-400"
-                        : "text-gray-400"
+                          ? "text-red-400"
+                          : "text-gray-400"
                     }`}
                   >
                     {biasResult.bias?.toUpperCase() || "N/A"}
@@ -123,16 +123,16 @@ const Bias = () => {
                         biasResult.bias?.toLowerCase() === "bullish"
                           ? "80%"
                           : biasResult.bias?.toLowerCase() === "bearish"
-                          ? "60%"
-                          : "30%",
+                            ? "60%"
+                            : "30%",
                     }}
                     transition={{ duration: 1 }}
                     className={`h-full ${
                       biasResult.bias?.toLowerCase() === "bullish"
                         ? "bg-green-400"
                         : biasResult.bias?.toLowerCase() === "bearish"
-                        ? "bg-red-400"
-                        : "bg-gray-500"
+                          ? "bg-red-400"
+                          : "bg-gray-500"
                     }`}
                   ></motion.div>
                 </div>
