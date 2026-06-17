@@ -36,12 +36,7 @@ const Form = ({ onSubmit }) => {
     e.preventDefault();
 
     if (!data.action) {
-      alert("Please fill in all required fields");
-      return;
-    }
-
-    if (!data.news && !data.events && !data.insights) {
-      alert("Please select at least one analysis option");
+      alert("Please select Buy or Sell action.");
       return;
     }
 
@@ -136,8 +131,8 @@ const Form = ({ onSubmit }) => {
         </label>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
-            { id: "news", label: "News" },
-            { id: "events", label: "Events" },
+            { id: "news", label: "Analysis" },
+            { id: "events", label: "Trends" },
             { id: "insights", label: "Insights" },
           ].map((opt) => (
             <label
@@ -161,7 +156,7 @@ const Form = ({ onSubmit }) => {
         </div>
       </div>
       {/* Entry and Target Prices */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="relative">
           <label className="block text-sm font-medium text-gray-400 mb-2">
             Entry Price
@@ -193,7 +188,7 @@ const Form = ({ onSubmit }) => {
             className="w-full pl-10 pr-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-white focus:ring-1 focus:ring-white/30 transition-all"
           />
         </div>
-      </div>
+      </div> */}
 
       {/* Submit Button */}
       <button

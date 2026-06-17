@@ -1,14 +1,24 @@
 // context/TradeContext.jsx
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 import useFetchNews from "../hooks/useFetchNews.js";
-import useFetchPairNews from "../hooks/useFetchPairNews.js";
+import { AuthContext } from "./AuthContext.jsx";
 
 export const TradeContext = createContext();
 
 export const TradeContextProvider = ({ children }) => {
+  const { token } = useContext(AuthContext);
+
   const [biasResult, setBiasResult] = useState("");
-  const { news, fetchNews } = useFetchNews();
-  // const { pair, fetchPair } = useFetchPairNews();
+
+  const {
+    news,
+    newsLoading,
+    newsError,
+    aiAnalysis,
+    lastOptions,
+    lastQuery,
+    fetchNews,
+  } = useFetchNews();
 
   const [planResult, setPlanResult] = useState(null);
   const [planLoading, setPlanLoading] = useState(false);
@@ -22,16 +32,17 @@ export const TradeContextProvider = ({ children }) => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/plan`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(planPayload),
       });
       const data = await res.json();
       if (!res.ok) {
         throw new Error(data?.error || "Failed to fetch plan analysis");
       }
-
-      // store plan result (either parsed plan or raw)
-      setPlanResult(data.plan || data); // backend returns {plan: ...}
+      setPlanResult(data.plan || data);
     } catch (err) {
       console.error("Error fetching plan analysis:", err);
       setPlanError(err.message || "Unknown error");
@@ -54,9 +65,12 @@ export const TradeContextProvider = ({ children }) => {
     biasResult,
     setBiasResult,
     news,
+    newsLoading,
+    newsError,
+    aiAnalysis,
+    lastOptions,
+    lastQuery,
     fetchNews,
-    // pair,
-    // fetchPair,
     data,
     setData,
     planResult,
